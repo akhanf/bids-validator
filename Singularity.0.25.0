@@ -16,8 +16,9 @@ apt-get install -y nodejs && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 cd /src
-git checkout $SINGULARITY_BUILDDEF
-sed -i -E "s/0.0.0/$SINGULARITY_BUILDDEF/" package.json
+TAG=${SINGULARITY_BUILDDEF#Singularity.}
+git checkout $TAG
+sed -i -E "s/0.0.0/$TAG/" package.json
 npm install -g /src
 
 %runscript
