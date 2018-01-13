@@ -2,9 +2,9 @@ Bootstrap: docker
 From: ubuntu:trusty
 
 %setup
+sed -i -E "s/0.0.0/0.25.0/" package.json
 mkdir -p $SINGULARITY_ROOTFS/src
 cp -Rv . $SINGULARITY_ROOTFS/src
-sed -i -E "s/0.0.0/0.25.0/" package.json
 
 %post 
 
