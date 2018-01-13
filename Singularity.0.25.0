@@ -2,7 +2,6 @@ Bootstrap: docker
 From: ubuntu:trusty
 
 %setup
-sed -i -E "s/0.0.0/0.25.0/" package.json
 mkdir -p $SINGULARITY_ROOTFS/src
 cp -Rv . $SINGULARITY_ROOTFS/src
 
@@ -10,12 +9,15 @@ cp -Rv . $SINGULARITY_ROOTFS/src
 
 ## Install the validator
 apt-get update && \
-apt-get install -y curl && \
+apt-get install -y curl git&& \
 curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 apt-get remove -y curl && \
 apt-get install -y nodejs && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+cd /src
+git checkout $SINGULARITY_BUILDDEF
+sed -i -E "s/0.0.0/$SINGULARITY_BUILDDEF/" package.json
 npm install -g /src
 
 %runscript
